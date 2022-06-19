@@ -1,6 +1,6 @@
 use std::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Neg, BitXor};
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 struct PhysicalVector {
     x: f64,
     y: f64,
@@ -56,7 +56,14 @@ impl DivAssign<f64> for PhysicalVector {
  * 共轭
  */
 
-impl<'a> Neg for &'a PhysicalVector {
+// impl<'a> Neg for &'a PhysicalVector {
+//     type Output = PhysicalVector;
+//     fn neg(self) -> PhysicalVector {
+//         return PhysicalVector { x: -self.x, y: -self.y, z: -self.z }
+//     }
+// }
+
+impl Neg for PhysicalVector {
     type Output = PhysicalVector;
     fn neg(self) -> PhysicalVector {
         return PhysicalVector { x: -self.x, y: -self.y, z: -self.z }
@@ -137,9 +144,9 @@ impl PhysicalVector {
         return PhysicalVector { x: xi, y: yi, z: zi }
     }
 
-    fn clone(&self) -> PhysicalVector {
-        return PhysicalVector { x: self.x, y: self.y, z: self.z }
-    }
+    // fn clone(&self) -> PhysicalVector {
+    //     return PhysicalVector { x: self.x, y: self.y, z: self.z }
+    // }
 
     fn magnitude(&self) -> f64 {
         ((self.x * self.x) + (self.y * self.y) + (self.z * self.z)).sqrt()
@@ -214,7 +221,7 @@ fn main() {
     println!("v6 * 2.0 is {:?}", v6);
 
     let v7: PhysicalVector = PhysicalVector::new(1.0, 0.0, 0.0);
-    let v7_neg = -&v7;
+    let v7_neg = -v7;
     println!("{:?}", v7_neg);
     println!("{:?}", v7)
 }
